@@ -1,0 +1,15 @@
+variables:
+  DOCS_DIRS: "app/code src" # Separate multiple dirs with spaces
+
+'Spellcheck the docs':
+  stage: lint
+  allow_failure: true
+  image: node:9.11.1
+  before_script: []
+  cache:
+    paths:
+      - node_modules/
+  script:
+    - npm i markdown-spellcheck -g
+    - mdspell --en-us --ignore-acronyms --ignore-numbers --report "$DOCS_DIRS/**/*.md"
+

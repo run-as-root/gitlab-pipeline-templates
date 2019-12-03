@@ -1,0 +1,41 @@
+variables:
+  PRODUCTION_URL: "https://example.com/override-me"
+
+'OWASP ZAP Baseline':
+  stage: post-deploy
+  before_script: []
+  image:
+    name: owasp/zap2docker-weekly
+    entrypoint: [""]
+  script:
+    - |
+      cat > zap.conf << EOF
+        10010	IGNORE	(Cookie No HttpOnly Flag)
+        10011	IGNORE	(Cookie Without Secure Flag)
+        10012	IGNORE	(Password Autocomplete in Browser)
+        10015	IGNORE	(Incomplete or No Cache-control and Pragma HTTP Header Set)
+        10016	FAIL	(Web Browser XSS Protection Not Enabled)
+        10017	IGNORE	(Cross-Domain JavaScript Source File Inclusion)
+        10019	FAIL	(Content-Type Header Missing)
+        10020	FAIL	(X-Frame-Options Header Scanner)
+        10021	IGNORE	(X-Content-Type-Options Header Missing)
+        10023	FAIL	(Information Disclosure - Debug Error Messages)
+        10024	FAIL	(Information Disclosure - Sensitive Informations in URL)
+        10025	FAIL	(Information Disclosure - Sensitive Information in HTTP Referrer Header)
+        10026	FAIL	(HTTP Parameter Override)
+        10027	FAIL	(Information Disclosure - Suspicious Comments)
+        10032	FAIL	(Viewstate Scanner)
+        10040	FAIL	(Secure Pages Include Mixed Content)
+        10054	IGNORE	(Cookie Without SameSite Attribute)
+        10105	FAIL	(Weak Authentication Method)
+        10202	IGNORE	(Absence of Anti-CSRF Tokens)
+        2	FAIL	(Private IP Disclosure)
+        3	FAIL	(Session ID in URL Rewrite)
+        50001	FAIL	(Script Passive Scan Rules)
+        90001	FAIL	(Insecure JSF ViewState)
+        90011	FAIL	(Charset Mismatch)
+        90022	FAIL	(Application Error Disclosure)
+        90030	FAIL	(WSDL File Passive Scanner)
+        90033	FAIL	(Loosely Scoped Cookie)
+      EOF
+    - zap-baseline.py -I -t $PRODUCTION_URL -u file://$(pwd)/zap.conf

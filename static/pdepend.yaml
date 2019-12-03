@@ -1,0 +1,17 @@
+variables:
+  LINT_DIRS: "src app/code" # Separate multiple dirs with spaces
+
+'Dependency Analyzer':
+  stage: static
+  image: composer
+  allow_failure: true
+  before_script: []
+  script:
+    - composer create-project pdepend/pdepend /tmp/pdepend
+    - mkdir -p reports/pdepend
+    - for dir in $LINT_DIRS; do mkdir -p reports/pdepend/$dir; done;
+    - for dir in $LINT_DIRS; do php /tmp/pdepend/src/bin/pdepend.php --overview-pyramid=reports/pdepend/${dir}/overview-pyramid.svg --jdepend-chart=reports/pdepend/${dir}/jdepend-chart.svg $dir; done;
+  artifacts:
+    paths:
+      - reports
+    expire_in: 30m

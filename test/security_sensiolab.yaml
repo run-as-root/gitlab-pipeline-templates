@@ -1,0 +1,19 @@
+variables:
+  PRODUCTION_URL: 'https://example.com/override-me'
+
+'Security Advisories':
+  stage: security
+  allow_failure: false
+  dependencies: []
+  before_script: []
+  image: php:7.3
+  only:
+    - master
+  script:
+    - mkdir -p reports
+    - curl -O https://get.sensiolabs.org/security-checker.phar
+    - php security-checker.phar security:check composer.lock | sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g" | tee reports/security_advisories.txt
+  artifacts:
+    paths:
+      - reports
+    expire_in: 30m

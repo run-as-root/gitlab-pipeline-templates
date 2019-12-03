@@ -1,0 +1,11 @@
+pages:
+  stage: pages
+  allow_failure: true
+  script:
+    - |
+      [[ -d reports ]] && mv reports public/
+    - cp -R build/pages/* public
+  artifacts:
+    paths:
+      - public
+    expire_in: 7 days

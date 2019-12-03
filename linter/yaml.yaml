@@ -1,0 +1,10 @@
+variables:
+  LINT_DIRS: "src app/code" # Separate multiple dirs with spaces
+
+'Yaml Linting':
+  stage: lint
+  allow_failure: true
+  before_script: []
+  image: sdesbure/yamllint
+  script:
+    - for dir in $LINT_DIRS; do yamllint $LINT_DIRS $dir; done;

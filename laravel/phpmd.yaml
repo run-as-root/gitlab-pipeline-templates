@@ -1,0 +1,17 @@
+variables:
+  LINT_DIRS: "app/code src" # Separate multiple dirs with spaces
+
+'Mess Detection':
+  stage: static
+  image: composer
+  before_script: []
+  allow_failure: true
+  script:
+    - composer create-project phpmd/phpmd /tmp/phpmd
+    - mkdir -p reports
+    - for dir in $LINT_DIRS; do mkdir -p reports/phpmd/${dir}; done;
+    - for dir in $LINT_DIRS; do php /tmp/phpmd/src/bin/phpmd $dir html cleancode,codesize,design,unusedcode --reportfile reports/${dir}/phpmd-report.html --ignore-violations-on-exit; done;
+  artifacts:
+    paths:
+      - reports
+    expire_in: 30m

@@ -1,0 +1,12 @@
+variables:
+  CIGAR_JSON: .cigar.json
+  SMOKE_TEST_BASE_URL: "https://example.com/override-me"
+
+'Smoke Test':
+  stage: post-deploy
+  before_script: []
+  image:
+    name: brunty/cigar:1.12.3
+    entrypoint: [""]
+  script:
+    - if [ -f $CIGAR_JSON ]; then cigar -u $SMOKE_TEST_BASE_URL -c $CIGAR_JSON; fi

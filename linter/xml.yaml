@@ -1,0 +1,11 @@
+variables:
+  LINT_DIRS: "app/code src" # Separate multiple dirs with spaces
+
+'XML Linting':
+  stage: lint
+  allow_failure: true
+  image: composer
+  before_script: []
+  script:
+    - composer create-project sclable/xml-lint /tmp/xml-lint
+    - for dir in $LINT_DIRS; do php /tmp/xml-lint/bin/xmllint --skip-xsd $dir; done;

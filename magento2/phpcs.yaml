@@ -1,0 +1,17 @@
+variables:
+  LINT_DIRS: "app/code src" # Separate multiple dirs with spaces
+
+'Codestyle':
+  stage: static
+  image: composer
+  allow_failure: true
+  before_script: []
+  script:
+    - composer create-project magento/magento-coding-standard /tmp/meqp2
+    - mkdir -p reports
+    - for dir in $LINT_DIRS; do mkdir -p reports/phpcs/$dir; done;
+    - for dir in $LINT_DIRS; do php /tmp/meqp2/vendor/bin/phpcs $dir --standard=Magento2 --severity=10 --extensions=php,phtml --report=full --report-file=reports/phpcs/${dir}/phpcs-report.log; done;
+  artifacts:
+    paths:
+      - reports
+    expire_in: 30m

@@ -1,0 +1,16 @@
+variables:
+  LINT_DIRS: "app/code src" # Separate multiple dirs with spaces
+
+'Copy/Paste Detection':
+  stage: static
+  image: composer
+  allow_failure: true
+  before_script: []
+  script:
+    - composer create-project sebastian/phpcpd /tmp/phpcpd
+    - mkdir -p reports/phpcpd
+    - php /tmp/phpcpd/phpcpd --regexps-exclude="#.*Test.*#" --log-pmd=reports/phpcpd/phpcpd.xml $LINT_DIRS
+  artifacts:
+    paths:
+      - reports
+    expire_in: 30m
