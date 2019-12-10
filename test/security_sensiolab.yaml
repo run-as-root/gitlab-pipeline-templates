@@ -2,7 +2,7 @@ variables:
   PRODUCTION_URL: 'https://example.com/override-me'
 
 'Security Advisories':
-  stage: security
+  stage: static
   allow_failure: false
   dependencies: []
   before_script: []
