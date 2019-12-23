@@ -1,7 +1,8 @@
 'Awesome Bot':
   stage: test
   allow_failure: false
-  image: dkhamsing/awesome_bot
+  image: ruby:alpine
   before_script: []
   script:
+    - gem install awesome_bot --no-format-exec
     - awesome_bot --files README.md --allow-dupe --skip-save-results
