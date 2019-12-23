@@ -5,4 +5,4 @@
   before_script: []
   script:
     - gem install awesome_bot --no-format-exec
-    - awesome_bot --files README.md --allow-dupe --skip-save-results
+    - awesome_bot --files README.md --allow-dupe --skip-save-results --allow-redirect
