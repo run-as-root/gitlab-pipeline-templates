@@ -1,0 +1,7 @@
+'Awesome Bot':
+  stage: test
+  allow_failure: false
+  image: dkhamsing/awesome_bot
+  before_script: []
+  script:
+    - awesome_bot --files README.md --allow-dupe --skip-save-results
