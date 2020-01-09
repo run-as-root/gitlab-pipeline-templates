@@ -5,6 +5,10 @@ variables:
   stage: static
   image: composer
   before_script: []
+  only:
+    changes:
+      - "*.php"
+      - "**/*.php"
   allow_failure: true
   script:
     - composer create-project phpmd/phpmd /tmp/phpmd

@@ -3,6 +3,10 @@
   allow_failure: false
   image: ruby:alpine
   before_script: []
+  only:
+    changes:
+      - "*.md"
+      - "**/*.md"
   script:
     - gem install awesome_bot --no-format-exec
     - awesome_bot --files README.md --allow-dupe --skip-save-results --allow-redirect

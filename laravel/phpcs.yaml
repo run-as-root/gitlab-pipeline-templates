@@ -6,6 +6,10 @@ variables:
   image: composer
   allow_failure: true
   before_script: []
+  only:
+    changes:
+      - "*.php"
+      - "**/*.php"
   script:
     - composer create-project doctrine/coding-standard /tmp/cs
     - mkdir -p reports/phpcs

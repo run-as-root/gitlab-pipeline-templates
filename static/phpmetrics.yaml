@@ -6,6 +6,10 @@ variables:
   allow_failure: true
   image: composer
   before_script: []
+  only:
+    changes:
+      - "*.php"
+      - "**/*.php"
   script:
     - composer create-project phpmetrics/phpmetrics /tmp/phpmetrics
     - mkdir -p reports/phpmetrics

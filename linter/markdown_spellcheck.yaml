@@ -6,6 +6,10 @@ variables:
   allow_failure: true
   image: node:9.11.1
   before_script: []
+  only:
+    changes:
+      - "*.md"
+      - "**/*.md"
   cache:
     paths:
       - node_modules/

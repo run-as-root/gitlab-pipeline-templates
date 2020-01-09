@@ -5,6 +5,12 @@ variables:
   stage: lint
   allow_failure: true
   before_script: []
+  only:
+    changes:
+      - "*.yaml"
+      - "*.yml"
+      - "**/*.yaml"
+      - "**/*.yml"
   image: sdesbure/yamllint
   script:
     - for dir in $LINT_DIRS; do yamllint $LINT_DIRS $dir; done;

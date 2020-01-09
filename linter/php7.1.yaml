@@ -5,6 +5,10 @@ variables:
   stage: lint
   image: php:7.1
   before_script: []
+  only:
+    changes:
+      - "*.php"
+      - "**/*.php"
   allow_failure: false
   script:
     - sh -c 'if find ${LINT_DIRS} -name "*.php" -exec php -l {} 2>&1 \; | grep -v "^No syntax errors detected"; then exit 1; fi'

@@ -8,7 +8,11 @@ variables:
   before_script: []
   image: php:7.3
   only:
-    - master
+    refs:
+      - master
+    changes:
+      - composer.lock
+      - composer.json
   script:
     - mkdir -p reports
     - curl -O https://get.sensiolabs.org/security-checker.phar
