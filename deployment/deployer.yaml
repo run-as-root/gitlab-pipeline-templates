@@ -1,11 +1,13 @@
 variables:
   DEPLOYER_CONFIG: 'deployment/deploy.php'
   DEPLOY_STAGE: 'staging'
+  PRIVATE_SSH_DEPLOYMENT_KEY: ''
 
 'Deplyoer':
   stage: deploy
   image: composer
   script:
+    - ssh-add <(echo "$PRIVATE_SSH_DEPLOYMENT_KEY")
     - composer create-project deployer/deployer /tmp/deployer
     - cd $(dirname ${DEPLOYER_CONFIG})
     - php /tmp/deployer/bin/dep deploy --branch=$CI_COMMIT_REF_NAME $DEPLOY_STAGE
