@@ -9,3 +9,7 @@ variables:
   before_script: []
   script:
     - /start.sh $SITESPEED_URL
+  artifacts:
+    paths:
+      - reports
+    expire_in: 7 days
