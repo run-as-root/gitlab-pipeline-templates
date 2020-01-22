@@ -1,5 +1,6 @@
 variables:
   LINT_DIRS: "app/code src" # Separate multiple dirs with spaces
+  PHP_CS_STANDARD: ""
 
 'Codestyle':
   stage: static
@@ -13,7 +14,7 @@ variables:
   script:
     - composer create-project doctrine/coding-standard /tmp/cs
     - mkdir -p reports/phpcs
-    - php /tmp/cs/vendor/bin/phpcs --standard=Doctrine --report=full --report=reports/phpcs/ --no-cache $LINT_DIRS
+    - php /tmp/cs/vendor/bin/phpcs --standard=${PHP_CS_STANDARD} --report=full --report=reports/phpcs/ --no-cache $LINT_DIRS
   artifacts:
     paths:
       - reports
