@@ -9,7 +9,7 @@ variables:
   script:
     - composer create-project slevomat/coding-standard /tmp/cs
     - mkdir -p reports/phpcs
-    - php /tmp/cs/vendor/bin/phpcs --standard=${PHPCS_RULESET} --report=full --report=reports/phpcs/ --no-cache $LINT_PHPCS_DIRS
+    - php /tmp/cs/bin/phpcs --standard=${PHPCS_RULESET} --report=full --report=reports/phpcs/ --no-cache $LINT_PHPCS_DIRS
   artifacts:
     paths:
       - reports
