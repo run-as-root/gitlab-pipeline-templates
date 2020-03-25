@@ -1,0 +1,22 @@
+variables:
+  LINT_PHPMD_DIRS: "src app/code" # Separate multiple dirs with spaces
+  PHPMD_RULESET: "phpmd-ruleset.xml" # Path to the PHPMD Ruleset
+
+'Mess Detection':
+  stage: static
+  image: composer
+  allow_failure: true
+  before_script: []
+  only:
+    changes:
+      - "*.php"
+      - "**/*.php"
+  script:
+    - composer create-project phpmd/phpmd /tmp/phpmd
+    - mkdir -p reports/phpmd
+    - for dir in $LINT_PHPMD_DIRS; do mkdir -p reports/phpmd/$dir; done;
+    - for dir in $LINT_PHPMD_DIRS; do php /tmp/phpmd/phpmd/src/bin/phpmd $dir text $PHPMD_RULESET; done;
+  artifacts:
+    paths:
+      - reports
+    expire_in: 30m
