@@ -1,5 +1,5 @@
 variables:
-  PHPCS_LINT_DIRS: "app/code src" # Separate multiple dirs with spaces
+  LINT_PHPCS_DIRS: "app/code src" # Separate multiple dirs with spaces
   PHPCS_RULESET: ""
 
 'Codestyle':
