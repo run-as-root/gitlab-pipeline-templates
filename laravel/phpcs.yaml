@@ -1,18 +1,19 @@
 variables:
-  LINT_DIRS: "app/code src" # Separate multiple dirs with spaces
-  PHP_CS_STANDARD: ""
+  PHPCS_LINT_DIRS: "app/code src" # Separate multiple dirs with spaces
+  PHPCS_RULESET: ""
+  ALLOW_FAILURE: false
 
 'Codestyle':
   stage: static
   image: composer
-  allow_failure: true
+  allow_failure: $ALLOW_FAILURE
   before_script: []
   only:
     changes:
       - "*.php"
       - "**/*.php"
   script:
-    - composer create-project doctrine/coding-standard /tmp/cs
+    - composer create-project slevomat/coding-standard /tmp/cs
     - mkdir -p reports/phpcs
     - php /tmp/cs/vendor/bin/phpcs --standard=${PHP_CS_STANDARD} --report=full --report=reports/phpcs/ --no-cache $LINT_DIRS
   artifacts:
