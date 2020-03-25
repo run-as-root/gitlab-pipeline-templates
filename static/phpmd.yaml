@@ -5,12 +5,7 @@ variables:
 'Mess Detection':
   stage: static
   image: composer
-  allow_failure: true
   before_script: []
-  only:
-    changes:
-      - "*.php"
-      - "**/*.php"
   script:
     - composer create-project phpmd/phpmd /tmp/phpmd
     - mkdir -p reports/phpmd
