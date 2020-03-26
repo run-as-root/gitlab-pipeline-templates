@@ -10,7 +10,7 @@ variables:
     - composer create-project phpmd/phpmd /tmp/phpmd
     - mkdir -p reports/phpmd
     - for dir in $LINT_PHPMD_DIRS; do mkdir -p reports/phpmd/$dir; done;
-    - for dir in $LINT_PHPMD_DIRS; do php /tmp/phpmd/phpmd/src/bin/phpmd $dir text $PHPMD_RULESET; done;
+    - for dir in $LINT_PHPMD_DIRS; do php /tmp/phpmd/src/bin/phpmd $dir text $PHPMD_RULESET; done;
   artifacts:
     paths:
       - reports
