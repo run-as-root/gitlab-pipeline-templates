@@ -6,6 +6,7 @@ variables:
   allow_failure: true
   image: pipelinecomponents/jsonlint
   before_script: []
+  needs: []
   only:
     changes:
       - "*.json"
