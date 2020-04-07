@@ -3,9 +3,10 @@ variables:
 
 'PHP Metrics':
   stage: static
-  allow_failure: true
+  allow_failure: false
   image: composer
   before_script: []
+  needs: []
   only:
     changes:
       - "*.php"
