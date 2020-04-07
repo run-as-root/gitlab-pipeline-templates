@@ -5,6 +5,7 @@ variables:
   stage: lint
   allow_failure: true
   before_script: []
+  needs: []
   only:
     changes:
       - "*.yaml"
