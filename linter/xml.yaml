@@ -5,6 +5,7 @@ variables:
   stage: lint
   allow_failure: true
   image: composer
+  needs: []
   only:
     changes:
       - "*.xml"
