@@ -6,6 +6,7 @@ variables:
   allow_failure: true
   image: node:9.11.1
   before_script: []
+  needs: []
   only:
     changes:
       - "*.md"
