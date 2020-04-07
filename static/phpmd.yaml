@@ -5,6 +5,7 @@ variables:
 'Mess Detection':
   stage: static
   image: composer
+  needs: []
   before_script: []
   script:
     - composer create-project phpmd/phpmd /tmp/phpmd
