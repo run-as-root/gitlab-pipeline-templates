@@ -5,6 +5,7 @@ variables:
   stage: lint
   image: php:7.4
   before_script: []
+  needs: []
   only:
     changes:
       - "*.php"
