@@ -1,0 +1,19 @@
+variables:
+  INTEGRITY_CHECKER_DIR: "/tmp/integrity-checker"
+  INTEGRITY_CHECKER_BIN: "${INTEGRITY_CHECKER_DIR}/bin/dependencies"
+  MAGENTO_DIR: "."
+  INTEGRITY_CHECKER_DIR_TO_ANALYZE: "app/code/*"
+
+'🧙‍ - Integrity Check':
+  stage: '🏰 - Static Tests'
+  image: composer
+  allow_failure: false
+  extends: .composer_cache_pull
+  rules:
+    - if: $CI_MERGE_REQUEST_IID
+  script:
+    - git fetch -vp # fetch branch refs so changed files can be compiled
+    - "composer create-project run_as_root/integrity-checker ${INTEGRITY_CHECKER_DIR} --repository=\"{ \\\"type\\\": \\\"vcs\\\", \\\"url\\\": \\\"git@github.com:run-as-root/Magento-2-Dependency-Checker.git\\\" }\" --stability=dev --remove-vcs"
+    - $INTEGRITY_CHECKER_BIN $MAGENTO_DIR $INTEGRITY_CHECKER_DIR_TO_ANALYZE
+  artifacts:
+    expire_in: 30m
