@@ -8,7 +8,6 @@ variables:
   stage: '🏰 - Static Tests'
   image: composer
   allow_failure: false
-  extends: .composer_cache_pull
   script:
     - git fetch -vp # fetch branch refs so changed files can be compiled
     - "composer create-project run_as_root/integrity-checker ${INTEGRITY_CHECKER_DIR} --repository=\"{ \\\"type\\\": \\\"vcs\\\", \\\"url\\\": \\\"git@github.com:run-as-root/Magento-2-Dependency-Checker.git\\\" }\" --stability=dev --remove-vcs"
