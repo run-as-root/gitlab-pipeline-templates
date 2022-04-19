@@ -35,3 +35,16 @@ include:
   - remote: 'https://raw.githubusercontent.com/run-as-root/gitlab-pipeline-templates/master/test/smoke.yaml'
 ```
  
+## Step Overview
+
+All the steps that are included in this repository are supposed to be plug and play steps, so no additional config should be required. Of course, some checks do more than you might want. If so, you can configure them via environment variables. 
+
+### Magento 2 Integrity Checker
+
+This step is a static test to find all missing dependency declarations in the `composer.json` and `module.xml` files of your code.
+
+```yaml
+include:
+  - remote: 'https://raw.githubusercontent.com/run-as-root/gitlab-pipeline-templates/master/magento2/integrity-checker.yml'
+```
+
