@@ -1,0 +1,22 @@
+variables:
+  SENTRY_ORG: 'sentry_org_example'
+  SENTRY_PROJECT: 'sentry_project_example'
+  SENTRY_AUTH_TOKEN: 'sentry_auth_token_example'
+
+'👁 - Sentry Release':
+  image: getsentry/sentry-cli:latest
+  stage: ☕️
+  before_script:
+    # install & start ssh-agent
+    - which ssh-agent || ( apk --update add openssh-client )
+    - eval $(ssh-agent -s)
+    # add ssh-key to ssh-agent
+    - echo "$CI_GIT_PUSH_TOKEN" | base64 -d | ssh-add - > /dev/null
+  script:
+    - apk add git
+    - git fetch -vp # fetch branch refs so changed files can be compiled
+    - sentry-cli releases new --finalize --url https://gitlab.com/run_as_root/tectake/magento2-shop/-/releases/$CI_COMMIT_TAG $CI_COMMIT_TAG
+    - sentry-cli releases set-commits "$CI_COMMIT_TAG" --auto
+    - sentry-cli releases deploys "$CI_COMMIT_TAG" new --env production
+  only:
+    - tags
