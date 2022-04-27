@@ -48,3 +48,12 @@ include:
   - remote: 'https://raw.githubusercontent.com/run-as-root/gitlab-pipeline-templates/master/magento2/integrity-checker.yml'
 ```
 
+### Deployment Sentry Release
+
+This step is a deployment step that creates release and deployment in Sentry service and sends release's commits information.
+
+```yaml
+include:
+  - remote: 'https://raw.githubusercontent.com/run-as-root/gitlab-pipeline-templates/master/deployment/sentry.yml'
+```
+
