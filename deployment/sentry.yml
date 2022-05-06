@@ -15,7 +15,7 @@ variables:
   script:
     - apk add git
     - git fetch -vp # fetch branch refs so changed files can be compiled
-    - sentry-cli releases new --finalize --url https://gitlab.com/run_as_root/tectake/magento2-shop/-/releases/$CI_COMMIT_TAG $CI_COMMIT_TAG
+    - sentry-cli releases new --finalize $CI_COMMIT_TAG
     - sentry-cli releases set-commits "$CI_COMMIT_TAG" --auto
     - sentry-cli releases deploys "$CI_COMMIT_TAG" new --env production
   only:
