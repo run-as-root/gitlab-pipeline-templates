@@ -57,3 +57,20 @@ include:
   - remote: 'https://raw.githubusercontent.com/run-as-root/gitlab-pipeline-templates/master/deployment/sentry.yml'
 ```
 
+### Magento 2 Integration Tests
+
+This step executes Magento Integration Tests based on pre-configured tests suite.
+
+#### How to set up Integration Tests on a project
+
+1. Include yaml config:
+```yaml
+include:
+  - remote: 'https://raw.githubusercontent.com/run-as-root/gitlab-pipeline-templates/master/magento2/integration-tests/tests-integration.yml'
+```
+2. Make sure you have stage `"🦄 - Unit-/Integration Tests"` setup and running in your project pipelines;
+3. Configure phpunit:
+   1. Create `phpunit-integration.xml` config in project root;
+   2. Use as template `https://raw.githubusercontent.com/run-as-root/gitlab-pipeline-templates/master/magento2/integration-tests/phpunit-integration.xml.dist`;
+   3. Update testsuites based on your needs - see `{{PROJECT_NAME}}` and `{{PROJECT_SOURCE_FOLDER}}` placeholders.
+
