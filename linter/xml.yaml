@@ -2,7 +2,7 @@ variables:
   LINT_DIRS: "app/code src" # Separate multiple dirs with spaces
 
 'XML Linting':
-  stage: lint
+  stage: '🧱 -  Linting'
   allow_failure: true
   image: composer
   needs: []

@@ -2,7 +2,7 @@ variables:
   DOCS_DIRS: "app/code src" # Separate multiple dirs with spaces
 
 'Spellcheck the docs':
-  stage: lint
+  stage: '🧱 -  Linting'
   allow_failure: true
   image: node:9.11.1
   before_script: []
