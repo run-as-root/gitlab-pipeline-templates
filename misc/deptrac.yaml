@@ -1,0 +1,21 @@
+variables:
+  LINT_DIRS: "app/code src" # Separate multiple dirs with spaces
+
+'DepTrac':
+  stage: static
+  image: composer
+  before_script: []
+  only:
+    changes:
+      - "*.php"
+      - "**/*.php"
+  allow_failure: true
+  script:
+    - composer create-project qossmic/deptrac-shim /tmp/deptrac
+    - mkdir -p reports
+    - for dir in $LINT_DIRS; do mkdir -p reports/deptrac/${dir}; done;
+    - for dir in $LINT_DIRS; do php /tmp/deptrac/deptrac analyse $dir; done;
+  artifacts:
+    paths:
+      - reports
+    expire_in: 30m
