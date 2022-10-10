@@ -7,10 +7,6 @@ variables:
   image: pipelinecomponents/jsonlint
   before_script: []
   needs: []
-  only:
-    changes:
-      - "*.json"
-      - "**/*.json"
   script:
     - |
       find $LINT_DIRS -not -path './.git/*' -name '*.json' -type f -print0 |

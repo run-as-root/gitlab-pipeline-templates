@@ -7,10 +7,6 @@ variables:
   image: node:9.11.1
   before_script: []
   needs: []
-  only:
-    changes:
-      - "*.md"
-      - "**/*.md"
   cache:
     paths:
       - node_modules/

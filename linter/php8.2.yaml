@@ -6,10 +6,6 @@ variables:
   image: php:8.2-cli
   before_script: []
   needs: []
-  only:
-    changes:
-      - "*.php"
-      - "**/*.php"
   allow_failure: false
   script:
     - sh -c 'if find ${LINT_DIRS} -name "*.php" -exec php -l {} 2>&1 \; | grep -v "^No syntax errors detected"; then exit 1; fi'

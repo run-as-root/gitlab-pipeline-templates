@@ -6,10 +6,6 @@ variables:
   allow_failure: true
   image: composer
   needs: []
-  only:
-    changes:
-      - "*.xml"
-      - "**/*.xml"
   before_script: []
   script:
     - composer create-project sclable/xml-lint /tmp/xml-lint
