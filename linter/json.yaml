@@ -9,5 +9,5 @@ variables:
   needs: []
   script:
     - |
-      find $LINT_DIRS -not -path './.git/*' -name '*.json' -type f -print0 |
+      find $LINT_DIRS_JSON -not -path './.git/*' -name '*.json' -type f -print0 |
       parallel --will-cite -k -0 -n1 jsonlint -q
