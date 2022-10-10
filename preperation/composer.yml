@@ -1,3 +1,5 @@
+# This stage sets up composer's cache and installs the project once.
+
 variables:
   COMPOSER_CACHE_DIR: $CI_PROJECT_DIR/.composer
   COMPOSER_BIN: 'composer2'
@@ -21,4 +23,3 @@ variables:
   script:
     - $COMPOSER_BIN
     - $COMPOSER_BIN install --prefer-dist
-    - $COMPOSER_BIN install --prefer-dist --working-dir=build/tools
