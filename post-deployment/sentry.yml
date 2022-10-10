@@ -5,7 +5,7 @@ variables:
 
 '👁 - Sentry Release':
   image: getsentry/sentry-cli:latest
-  stage: ☕️
+  stage: '☕️ - Post Deployment'
   before_script:
     # install & start ssh-agent
     - which ssh-agent || ( apk --update add openssh-client )
