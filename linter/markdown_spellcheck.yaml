@@ -12,5 +12,5 @@ variables:
       - node_modules/
   script:
     - npm i markdown-spellcheck -g
-    - mdspell --en-us --ignore-acronyms --ignore-numbers --report "$DOCS_DIRS/**/*.md"
+    - mdspell --en-us --ignore-acronyms --ignore-numbers --report "$LINT_DIRS_MARKDOWN/**/*.md"
 
