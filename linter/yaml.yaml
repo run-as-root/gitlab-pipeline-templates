@@ -2,7 +2,7 @@ variables:
   LINT_DIRS_YAML: "src app/code" # Separate multiple dirs with spaces
 
 'Yaml Linting':
-  stage: '🧱 -  Linting'
+  stage: '🌈 - Linting'
   allow_failure: true
   before_script: []
   needs: []

@@ -1,8 +1,8 @@
 variables:
-  PHP_LINT_DIRS: "app/code src" # Separate multiple dirs with spaces
+  LINT_DIRS_PHP: "app/code src" # Separate multiple dirs with spaces
 
 'PHP 7.4 Linting':
-  stage: '🧱 -  Linting'
+  stage: '🌈 - Linting'
   image: php:7.4
   before_script: []
   needs: []
