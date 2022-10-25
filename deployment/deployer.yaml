@@ -4,7 +4,7 @@ variables:
   PRIVATE_SSH_DEPLOYMENT_KEY: ''
 
 'Deplyoer':
-  stage: deploy
+  stage: '🚀 - Deployment'
   image: composer
   script:
     - ssh-add <(echo "$PRIVATE_SSH_DEPLOYMENT_KEY")
