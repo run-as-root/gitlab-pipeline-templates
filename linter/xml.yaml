@@ -9,4 +9,4 @@ variables:
   before_script: []
   script:
     - composer create-project sclable/xml-lint /tmp/xml-lint
-    - for dir in $LINT_DIRS; do php /tmp/xml-lint/bin/xmllint --skip-xsd $dir; done;
+    - for dir in $LINT_DIRS_XML; do php /tmp/xml-lint/bin/xmllint --skip-xsd $dir; done;
