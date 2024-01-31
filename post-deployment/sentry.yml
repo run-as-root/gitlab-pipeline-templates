@@ -16,7 +16,7 @@ variables:
     - apk add git
     - git fetch -vp # fetch branch refs so changed files can be compiled
     - sentry-cli releases new --finalize $CI_COMMIT_TAG
-    - sentry-cli releases set-commits "$CI_COMMIT_TAG" --auto
-    - sentry-cli releases deploys "$CI_COMMIT_TAG" new --env production
+    - sentry-cli releases set-commits $CI_COMMIT_TAG --auto
+    - sentry-cli releases deploys $CI_COMMIT_TAG new --env production
   only:
     - tags
