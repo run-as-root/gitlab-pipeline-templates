@@ -1,0 +1,75 @@
+'🐿 - Integration Tests':
+  stage: '🦄 - Unit-/Integration Tests'
+  coverage: '/^\s*Lines:\s*\d+.\d+\%/'
+  services:
+    - name: mariadb:10.4
+      alias: db
+      command: ["--innodb-buffer-pool-size=1024M --innodb-log-buffer-size=32M --max_allowed_packet=325058560"]
+    - name: docker.elastic.co/elasticsearch/elasticsearch:7.6.2
+      alias: elasticsearch
+      command: [ "bin/elasticsearch", "-Expack.security.enabled=false", "-Ediscovery.type=single-node" ]
+  extends: .composer_cache_pull
+  needs: ["📦 - Preparation"]
+  variables:
+    PHP_BIN: ${PHP_BIN:=php}
+
+    # db config for tests-integration and artifact
+    MYSQL_ROOT_PASSWORD: root
+    APP_DB_HOST: db
+    APP_DB_USER: root
+    APP_DB_PASS: $MYSQL_ROOT_PASSWORD
+    APP_DB_NAME: db01
+
+    # elasticsearch config
+    ELASTICSEARCH_HOST: elasticsearch
+    ELASTICSEARCH_PORT: 9200
+
+    # mysql config for integration tests
+    INSTALL_CONFIG_MYSQL: >
+      <?php
+
+      return [
+      'db-host' => '${APP_DB_HOST}',
+      'db-user' => '${APP_DB_USER}',
+      'db-password' => '${APP_DB_PASS}',
+      'db-name' => '${APP_DB_NAME}',
+      'db-prefix' => '',
+      'backend-frontname' => 'backend',
+      'admin-user' => \Magento\TestFramework\Bootstrap::ADMIN_NAME,
+      'admin-password' => \Magento\TestFramework\Bootstrap::ADMIN_PASSWORD,
+      'admin-email' => \Magento\TestFramework\Bootstrap::ADMIN_EMAIL,
+      'admin-firstname' => \Magento\TestFramework\Bootstrap::ADMIN_FIRSTNAME,
+      'admin-lastname' => \Magento\TestFramework\Bootstrap::ADMIN_LASTNAME,
+      'elasticsearch-host' => '${ELASTICSEARCH_HOST}',
+      'elasticsearch-port' => '${ELASTICSEARCH_PORT}',
+      ];
+
+
+  script:
+    - set -e
+    - docker-php-ext-enable xdebug
+    # composer
+    - $COMPOSER_BIN install --prefer-dist
+    # prepare dbs
+    - mysqladmin --host=$APP_DB_HOST --user=$APP_DB_USER --password=$APP_DB_PASS create $APP_DB_NAME
+    # do installation
+    - echo "---------- MAGENTO CLI CHECK ----------"
+    - ${PHP_BIN} bin/magento
+    - echo "---------- MAGENTO SETUP:INSTALL ----------"
+    ## install magento, using 'yes' to answer all interaction questions (yes |) and ignoring all warnings that could occur while installation ( || true)
+    - yes | ${PHP_BIN} bin/magento setup:install --db-host=${APP_DB_HOST} --db-name=${APP_DB_NAME} --db-password=${APP_DB_PASS} --db-user=${APP_DB_USER} --search-engine="elasticsearch7" --elasticsearch-host=${ELASTICSEARCH_HOST} --elasticsearch-port=${ELASTICSEARCH_PORT} --admin-email=admin@mwltr.de --admin-firstname=Admin --admin-lastname=Admin --admin-password=admin123 --admin-user=admin --backend-frontname=admin --base-url=http://build.run-as-root.test --currency=EUR --language=en_US --session-save=files --timezone=Europe/Berlin --use-rewrites=1 -vvv || true
+    - echo "---------- MAGENTO SETUP:UPGRADE ----------"
+    - ${PHP_BIN} bin/magento setup:upgrade
+    # configure tests
+    - echo "---------- INTEGRATION TESTS CONFIG ----------"
+    - rm -f dev/tests/integration/etc/install-config-mysql.php
+    - mkdir -p dev/tests/integration/etc/ && echo $INSTALL_CONFIG_MYSQL > dev/tests/integration/etc/install-config-mysql.php
+    - cat dev/tests/integration/etc/install-config-mysql.php
+    - cp dev/tests/integration/etc/config-global.php.dist dev/tests/integration/etc/config-global.php
+    # run tests
+    - echo "---------- INTEGRATION TESTS PHPUNIT ----------"
+    - ${PHP_BIN} vendor/bin/phpunit -c phpunit-integration.xml --no-coverage --colors=never --disable-coverage-ignore
+  artifacts:
+    paths:
+      - build/output/
+    expire_in: 2 days
