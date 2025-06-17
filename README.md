@@ -49,6 +49,7 @@ The following linters are provisioned already:
 - [PHP 8.0](/linter/php8.0.yaml) - Performs Syntax Checks of the file type `.php`.
 - [PHP 8.1](/linter/php8.1.yaml) - Performs Syntax Checks of the file type `.php`.
 - [PHP 8.2](/linter/php8.2.yaml) - Performs Syntax Checks of the file type `.php`.
+- [PHP 8.3](/linter/php8.3.yaml) - Performs Syntax Checks of the file type `.php`.
 
 ### 🏰 - Static Tests
 
