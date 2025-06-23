@@ -1,15 +1,11 @@
 variables:
-  LINT_DIRS: "app/code src" # Separate multiple dirs with spaces
+  LINT_DIRS_PHP: "app/code src" # Separate multiple dirs with spaces
 
 'PHP 7.1 Linting':
-  stage: lint
+  stage: '🌈 - Linting'
   image: php:7.1
   before_script: []
   needs: []
-  only:
-    changes:
-      - "*.php"
-      - "**/*.php"
   allow_failure: false
   script:
-    - sh -c 'if find ${LINT_DIRS} -name "*.php" -exec php -l {} 2>&1 \; | grep -v "^No syntax errors detected"; then exit 1; fi'
+    - sh -c 'if find ${LINT_DIRS_PHP} -name "*.php" -exec php -l {} 2>&1 \; | grep -v "^No syntax errors detected"; then exit 1; fi'

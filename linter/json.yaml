@@ -1,17 +1,13 @@
 variables:
-  LINT_DIRS: "app/code src" # Separate multiple dirs with spaces
+  LINT_DIRS_JSON: "app/code src" # Separate multiple dirs with spaces
 
 'Json Linting':
-  stage: lint
+  stage: '🌈 - Linting'
   allow_failure: true
   image: pipelinecomponents/jsonlint
   before_script: []
   needs: []
-  only:
-    changes:
-      - "*.json"
-      - "**/*.json"
   script:
     - |
-      find $LINT_DIRS -not -path './.git/*' -name '*.json' -type f -print0 |
+      find $LINT_DIRS_JSON -not -path './.git/*' -name '*.json' -type f -print0 |
       parallel --will-cite -k -0 -n1 jsonlint -q

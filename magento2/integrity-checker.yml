@@ -10,7 +10,7 @@ variables:
   allow_failure: false
   script:
     - git fetch -vp # fetch branch refs so changed files can be compiled
-    - "composer create-project run_as_root/integrity-checker ${INTEGRITY_CHECKER_DIR} --repository=\"{ \\\"type\\\": \\\"vcs\\\", \\\"url\\\": \\\"git@github.com:run-as-root/Magento-2-Dependency-Checker.git\\\" }\" --stability=dev --remove-vcs"
+    - composer create-project run_as_root/integrity-checker ${INTEGRITY_CHECKER_DIR} --stability=dev --remove-vcs
     - $INTEGRITY_CHECKER_BIN $MAGENTO_DIR $INTEGRITY_CHECKER_DIR_TO_ANALYZE
   artifacts:
     expire_in: 30m

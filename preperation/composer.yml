@@ -1,0 +1,25 @@
+# This stage sets up composer's cache and installs the project once.
+
+variables:
+  COMPOSER_CACHE_DIR: $CI_PROJECT_DIR/.composer
+  COMPOSER_BIN: 'composer2'
+
+.composer_cache:
+  cache:
+    key: ${CI_PROJECT_ID}
+    paths:
+      - .composer
+
+.composer_cache_pull:
+  cache:
+    policy: pull
+    key: ${CI_PROJECT_ID}
+    paths:
+      - .composer
+
+'📦 - Preparation':
+  stage: '📦 - Preparation'
+  extends: .composer_cache
+  script:
+    - $COMPOSER_BIN --version
+    - $COMPOSER_BIN install --prefer-dist
